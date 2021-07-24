@@ -81,23 +81,22 @@ class ACPIRename:
             # See if we get a device/method that matches that
             d = self.d.get_device_paths(path)
             m = self.d.get_method_paths(path)
-            if not any((d,m)):
+            n = self.d.get_name_paths(path)
+            if not any((d,m,n)):
                 self.u.head()
                 print("")
-                print("No device/method found for that search!")
+                print("No device/method/name found for that search!")
                 print("")
                 self.u.grab("Press [enter] to return...")
                 continue
-            # Get the first entry
-            if d: device = d[0]
-            else: device = m[0]
+            # Get the first entry in order of Device -> Method -> Name
+            if d: device   = d[0]
+            elif m: device = m[0]
+            else: device   = n[0]
             # We have something now - prompt for a rename
             find_t = device[0].split(".")[-1]
             find_h = binascii.hexlify(find_t.encode("utf-8") if sys.version_info >= (3,0) else find_t).upper()
             if sys.version_info >= (3,0): find_h = find_h.decode("utf-8")
-            print(find_h,type(find_h))
-            print(device)
-            print(self.d.find_next_hex(device[1]))
             padl,padr = self.d.get_shortest_unique_pad(find_h,self.d.find_next_hex(device[1])[1])
             while True:
                 self.u.head()
@@ -151,6 +150,7 @@ class ACPIRename:
         print("1. Generate Unique Rename")
         print("2. List Device Paths")
         print("3. List Method Paths")
+        print("4. List Name Paths")
         print("")
         print("D. Select DSDT or origin folder")
         print("Q. Quit")
@@ -169,6 +169,8 @@ class ACPIRename:
             self.list_paths(path_type="Device")
         elif menu == "3":
             self.list_paths(path_type="Method")
+        elif menu == "4":
+            self.list_paths(path_type="Name")
         return
 
 if __name__ == '__main__':
