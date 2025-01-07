@@ -37,7 +37,7 @@ class ACPIRename:
             return True
         # Need to prompt
         self.dsdt = self.select_dsdt()
-        if self.dsdt and self.d.dsdt:
+        if self.dsdt and self.d.get_dsdt_or_only():
             return True
         return False
 
