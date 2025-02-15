@@ -32,7 +32,7 @@ class ACPIRename:
         return self.select_dsdt()
 
     def ensure_dsdt(self):
-        if self.dsdt and self.d.dsdt:
+        if self.dsdt and self.d.get_dsdt_or_only():
             # Got it already
             return True
         # Need to prompt
@@ -58,7 +58,7 @@ class ACPIRename:
         self.u.head()
         print("")
         paths = []
-        for path in self.d.dsdt_paths:
+        for path in self.d.get_dsdt_or_only()["paths"]:
             if path[-1].lower() != path_type.lower(): continue
             print("{} ({})".format(path[0],path[1]))
         print("")
