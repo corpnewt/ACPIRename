@@ -15,8 +15,8 @@ class DSDT:
         self.iasl_url_macOS_legacy = "https://raw.githubusercontent.com/acidanthera/MaciASL/master/Dist/iasl-legacy"
         self.iasl_url_linux = "https://raw.githubusercontent.com/corpnewt/linux_iasl/main/iasl.zip"
         self.iasl_url_linux_legacy = "https://raw.githubusercontent.com/corpnewt/iasl-legacy/main/iasl-legacy-linux.zip"
-        self.acpi_github_windows = "https://github.com/acpica/acpica/releases"
-        self.acpi_github_windows_placeholder = "https://github.com/acpica/acpica/releases/{}"
+        self.acpi_github_windows = "https://github.com/open-acpica/acpica/releases"
+        self.acpi_github_windows_placeholder = "https://github.com/open-acpica/acpica/releases/{}"
         self.acpi_github_blacklist = (
             "20260408",
         )
@@ -367,7 +367,7 @@ class DSDT:
                 iasl = acpidump = None # Placeholders
                 for line in source.split("\n"):
                     # Check for any required assets
-                    if '<a href="/acpica/acpica/releases/download/' in line:
+                    if '/acpica/releases/download/' in line:
                         # Check if we got iasl.exe or acpidump.exe
                         if '/iasl.exe"' in line:
                             iasl = "https://github.com{}".format(line.split('"')[1].split('"')[0])
